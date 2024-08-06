@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frost Coffee - Sign In & Sign Up</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main-bg-color: #f2e8d5;
+      --main-text-color: #4a3b2a;
+      --accent-color: #8c5e3c;
+      --button-bg-color: #d2b98b;
+      --form-bg-color: #f5e8d4;
+      --input-border-color: #c1a58d;
+      --overlay-bg-gradient: linear-gradient(to right, #f2e8d5, #e9d8a6, #d2b98b, #f5e8d4);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: 'Montserrat', sans-serif;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background-color: var(--main-bg-color);
+    }
+
+    h1 {
+      font-weight: bold;
+      color: var(--main-text-color);
+      font-size: 28px;
+      margin: 20px 0;
+    }
+
+    p {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 18px;
+      letter-spacing: 0.5px;
+      margin: 10px 0 20px;
+      color: var(--main-text-color);
+    }
+
+    span {
+      font-size: 10px;
+      color: var(--main-text-color);
+    }
+
+    a {
+      color: var(--main-text-color);
+      font-size: 12px;
+      text-decoration: none;
+      margin: 8px 0;
+    }
+
+    button {
+      border-radius: 25px;
+      border: 1px solid var(--accent-color);
+      background-color: var(--button-bg-color);
+      color: var(--main-text-color);
+      font-size: 12px;
+      font-weight: bold;
+      padding: 10px 40px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background-color 0.3s, transform 0.2s ease-in;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    button.ghost {
+      background-color: transparent;
+      border-color: var(--main-text-color);
+    }
+
+    form {
+      background: var(--overlay-bg-gradient);
+      color: var(--main-text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 20px;
+      height: 100%;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    input {
+      background-color: #fff;
+      border: 1px solid var(--input-border-color);
+      padding: 10px 12px;
+      margin: 6px 0;
+      width: 100%;
+      color: var(--main-text-color);
+      font-size: 12px;
+    }
+
+    input+span {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      color: var(--accent-color);
+      cursor: pointer;
+    }
+
+    .container {
+      background-color: var(--form-bg-color);
+      border-radius: 10px;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+      position: relative;
+      overflow: hidden;
+      width: 700px;
+      max-width: 100%;
+      min-height: 450px;
+    }
+
+    .form-container {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      transition: all 0.6s ease-in-out;
+    }
+
+    .sign-in-container {
+      left: 0;
+      width: 50%;
+      z-index: 2;
+    }
+
+    .container.right-panel-active .sign-in-container {
+      transform: translateX(100%);
+    }
+
+    .sign-up-container {
+      left: 0;
+      width: 50%;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .container.right-panel-active .sign-up-container {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+      animation: show 0.6s;
+    }
+
+    @keyframes show {
+      0%, 49.99% {
+        opacity: 0;
+        z-index: 1;
+      }
+      50%, 100% {
+        opacity: 1;
+        z-index: 5;
+      }
+    }
+
+    .overlay-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: transform 0.6s ease-in-out;
+      z-index: 100;
+    }
+
+    .container.right-panel-active .overlay-container {
+      transform: translateX(-100%);
+    }
+
+    .overlay {
+      background: var(--overlay-bg-gradient);
+      color: #ffffff;
+      position: relative;
+      left: -100%;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .container.right-panel-active .overlay {
+      transform: translateX(50%);
+    }
+
+    .overlay-panel {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 20px;
+      text-align: center;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      transform: translateX(0);
+      transition: transform 0.6s ease-in-out;
+      color: var(--main-text-color);
+    }
+
+    .overlay-left {
+      transform: translateX(-20%);
+    }
+
+    .container.right-panel-active .overlay-left {
+      transform: translateX(0);
+    }
+
+    .overlay-right {
+      right: 0;
+      transform: translateX(0);
+    }
+
+    .container.right-panel-active .overlay-right {
+      transform: translateX(20%);
+    }
+
+    .social-container {
+      margin: 10px 0;
+    }
+
+    .social-container a {
+      border: 1px solid var(--input-border-color);
+      border-radius: 50%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 6px;
+      height: 35px;
+      width: 35px;
+      color: var(--main-text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .social-container a:hover {
+      background-color: var(--accent-color);
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="container">
+    <!-- Sign Up Form -->
+    <div class="form-container sign-up-container">
+      <form id="signup-form">
+        <h1>Join the Frost Coffee Community</h1>
+        <p>Craft and manage your perfect coffee recipes with Frost. Sign up now and start your journey with us!</p>
+        <div class="social-container">
+          <a href="#" class="social" id="facebook-signup"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social" id="google-signup"><i class="fab fa-google"></i></a>
+          <a href="#" class="social" id="linkedin-signup"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your email for registration</span>
+        <input type="text" placeholder="Name" id="signup-name" required />
+        <input type="email" placeholder="Email" id="signup-email" required />
+        <input type="password" placeholder="Password" id="signup-password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- Sign In Form -->
+    <div class="form-container sign-in-container">
+      <form id="signin-form">
+        <h1>Welcome Back to Frost Coffee</h1>
+        <p>Sign in to continue your coffee adventures. We’re excited to see you again!</p>
+        <div class="social-container">
+          <a href="#" class="social" id="facebook-signin"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social" id="google-signin"><i class="fab fa-google"></i></a>
+          <a href="#" class="social" id="linkedin-signin"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your account</span>
+        <input type="email" placeholder="Email" id="signin-email" required />
+        <input type="password" placeholder="Password" id="signin-password" required />
+        <a href="#">Forgot your password?</a>
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+
+    <!-- Overlay Panels -->
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back!</h1>
+          <p>To keep connected with us, please login with your personal info.</p>
+          <button class="ghost" id="signIn">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Hello, Coffee Lover!</h1>
+          <p>Enter your personal details and start your journey with Frost Coffee.</p>
+          <button class="ghost" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('signUp').addEventListener('click', () => {
+      document.getElementById('container').classList.add('right-panel-active');
+    });
+
+    document.getElementById('signIn').addEventListener('click', () => {
+      document.getElementById('container').classList.remove('right-panel-active');
+    });
+
+    const handleSocialSignIn = (platform) => {
+      alert(`${platform} sign-in is not implemented yet.`);
+    };
+
+    document.getElementById('facebook-signup').addEventListener('click', (e) => {
+      e.preventDefault();
+      handleSocialSignIn('Facebook');
+    });
+
+    document.getElementById('google-signup').addEventListener('click', (e) => {
+      e.preventDefault();
+      handleSocialSignIn('Google');
+    });
+
+    document.getElementById('linkedin-signup').addEventListener('click', (e) => {
+      e.preventDefault();
+      handleSocialSignIn('LinkedIn');
+    });
+
+    document.getElementById('facebook-signin').addEventListener('click', (e) => {
+      e.preventDefault();
+      handleSocialSignIn('Facebook');
+    });
+
+    document.getElementById('google-signin').addEventListener('click', (e) => {
+      e.preventDefault();
+      handleSocialSignIn('Google');
+    });
+
+    document.getElementById('linkedin-signin').addEventListener('click', (e) => {
+      e.preventDefault();
+      handleSocialSignIn('LinkedIn');
+    });
+
+    document.getElementById('signup-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Sign up form submitted.');
+    });
+
+    document.getElementById('signin-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Sign in form submitted.');
+    });
+  </script>
+</body>
+
+</html>
