@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Roboto, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(90deg, #E0E0E0, #B0B0B0);
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .screen {
+      background: #2D2D2D;
+      position: relative;
+      height: 600px;
+      width: 360px;
+      box-shadow: 0px 0px 24px #000;
+    }
+
+    .screen__content {
+      z-index: 1;
+      position: relative;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .screen__background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      -webkit-clip-path: inset(0 0 0 0);
+      clip-path: inset(0 0 0 0);
+    }
+
+    .screen__background__shape {
+      transform: rotate(45deg);
+      position: absolute;
+    }
+
+    .screen__background__shape1 {
+      height: 520px;
+      width: 520px;
+      background: #FFF;
+      top: -50px;
+      right: 120px;
+      border-radius: 0 72px 0 0;
+    }
+
+    .screen__background__shape2 {
+      height: 220px;
+      width: 220px;
+      background: #B0B0B0;
+      top: -172px;
+      right: 0;
+      border-radius: 32px;
+    }
+
+    .screen__background__shape3 {
+      height: 540px;
+      width: 190px;
+      background: linear-gradient(270deg, #4D4D4D, #6A6A6A);
+      top: -24px;
+      right: 0;
+      border-radius: 32px;
+    }
+
+    .screen__background__shape4 {
+      height: 400px;
+      width: 200px;
+      background: #7E7E7E;
+      top: 420px;
+      right: 50px;
+      border-radius: 60px;
+    }
+
+    .login {
+      width: 320px;
+      padding: 30px;
+      padding-top: 156px;
+    }
+
+    .login__field {
+      padding: 20px 0px;
+      position: relative;
+    }
+
+    .login__icon {
+      position: absolute;
+      top: 30px;
+      color: #787878;
+    }
+
+    .login__input {
+      border: none;
+      border-bottom: 2px solid #D1D1D4;
+      background: none;
+      padding: 10px;
+      padding-left: 24px;
+      font-weight: 700;
+      width: 75%;
+      transition: .2s;
+    }
+
+    .login__input:active,
+    .login__input:focus,
+    .login__input:hover {
+      outline: none;
+      border-bottom-color: #6A6A6A;
+    }
+
+    .login__submit {
+      background: #fff;
+      font-size: 14px;
+      margin-top: 30px;
+      padding: 16px 20px;
+      border-radius: 26px;
+      border: 1px solid #D4D3E8;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      color: #2D2D2D;
+      box-shadow: 0px 2px 2px #000;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .login__submit:active,
+    .login__submit:focus,
+    .login__submit:hover {
+      border-color: #6A6A6A;
+      outline: none;
+    }
+
+    .button__icon {
+      font-size: 24px;
+      margin-left: auto;
+      color: #787878;
+    }
+
+    .social-login {
+      position: absolute;
+      height: 140px;
+      width: 160px;
+      text-align: center;
+      bottom: 0px;
+      right: 0px;
+      color: #fff;
+    }
+
+    .social-icons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-login__icon {
+      padding: 20px 10px;
+      color: #fff;
+      text-decoration: none;
+      text-shadow: 0px 0px 8px #787878;
+    }
+
+    .social-login__icon:hover {
+      transform: scale(1.5);
+    }
+
+    .password-strength {
+      font-size: 12px;
+      color: #ff6b6b;
+    }
+
+    .password-toggle {
+      position: absolute;
+      top: 30px;
+      right: 10px;
+      cursor: pointer;
+      color: #787878;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="screen">
+      <div class="screen__background">
+        <span class="screen__background__shape screen__background__shape4"></span>
+        <span class="screen__background__shape screen__background__shape3"></span>
+        <span class="screen__background__shape screen__background__shape2"></span>
+        <span class="screen__background__shape screen__background__shape1"></span>
+      </div>
+      <div class="screen__content">
+        <form class="login" id="login-form">
+          <div class="login__field">
+            <i class="login__icon fas fa-user"></i>
+            <input type="text" class="login__input" placeholder="User name / Email" id="username" required>
+          </div>
+          <div class="login__field">
+            <i class="login__icon fas fa-lock"></i>
+            <input type="password" class="login__input" placeholder="Password" id="password" required>
+            <i class="password-toggle fas fa-eye" id="togglePassword"></i>
+          </div>
+          <div class="password-strength" id="password-strength"></div>
+          <button type="submit" class="login__submit">
+            <span class="button__text">Log In Now</span>
+            <i class="button__icon fas fa-chevron-right"></i>
+          </button>
+        </form>
+        <div class="social-login">
+          <h3>log in via</h3>
+          <div class="social-icons">
+            <a href="#" class="social-login__icon fab fa-google"></a>
+            <a href="#" class="social-login__icon fab fa-facebook"></a>
+            <a href="#" class="social-login__icon fab fa-linkedin"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordField = document.getElementById('password');
+      const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordField.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    document.getElementById('password').addEventListener('input', function () {
+      const password = this.value;
+      const strengthText = document.getElementById('password-strength');
+      const regex = {
+        weak: /.{1,6}/,
+        medium: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,10}$/,
+        strong: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{11,}$/
+      };
+      if (regex.strong.test(password)) {
+        strengthText.textContent = 'Strong';
+        strengthText.style.color = '#4caf50';
+      } else if (regex.medium.test(password)) {
+        strengthText.textContent = 'Medium';
+        strengthText.style.color = '#ffeb3b';
+      } else if (regex.weak.test(password)) {
+        strengthText.textContent = 'Weak';
+        strengthText.style.color = '#f44336';
+      } else {
+        strengthText.textContent = '';
+      }
+    });
+
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      alert(`Username: ${username}\nPassword: ${password}`);
+    });
+  </script>
+</body>
+
+</html>
